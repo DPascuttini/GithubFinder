@@ -1,12 +1,11 @@
 import React, { useState, useContext } from 'react';
 
 import AlertContext from '../../context/alert/alertContext';
-import GithubContext from '../../context/github/githubContext';
+import { useGithubContext } from '../../context/github/githubContext';
 
 const Search = () => {
-  const githubContext = useContext(GithubContext);
+  const githubContext = useGithubContext();
   const alertContext = useContext(AlertContext);
-
   const [text, setText] = useState('');
 
   const onSubmit = (e) => {
@@ -37,7 +36,7 @@ const Search = () => {
           className="btn btn-dark btn-block"
         />
       </form>
-      {githubContext.users.length > 0 && (
+      {githubContext.users?.length > 0 && (
         <button
           className="btn btn-light btn-block"
           onClick={githubContext.clearUsers}

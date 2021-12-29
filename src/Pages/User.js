@@ -1,19 +1,15 @@
-import React, { Fragment, useEffect, useContext } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { Link, useParams } from 'react-router-dom';
 
 import Spinner from '../components/layout/Spinner';
 import Repos from '../components/repos/Repos';
-import GithubContext from '../context/github/githubContext';
+import { useGithubContext } from '../context/github/githubContext';
+import { useGetUser } from '../hooks/useGetUser';
 
-const User = ({ match }) => {
-  const githubContext = useContext(GithubContext);
-  const { getUser, loading, user, repos, getUserRepos } = githubContext;
+const User = () => {
+  const { loading, user, repos } = useGithubContext();
 
-  useEffect(() => {
-    getUser(match.params.login);
-    getUserRepos(match.params.login);
-    // eslint-disable-next-line
-  }, []);
+  useGetUser();
 
   const {
     name,
@@ -34,7 +30,7 @@ const User = ({ match }) => {
   if (loading) return <Spinner />;
 
   return (
-    <Fragment>
+    <>
       <Link to="/" className="btn btn-light">
         Back to Search
       </Link>
@@ -49,7 +45,7 @@ const User = ({ match }) => {
           <img
             src={avatar_url}
             className="round-img"
-            alt=""
+            alt="avatar"
             style={{ width: '150px' }}
           />
           <h1>{name}</h1>
@@ -57,36 +53,31 @@ const User = ({ match }) => {
         </div>
         <div>
           {bio && (
-            <Fragment>
+            <>
               <h3>Bio</h3>
               <p>{bio}</p>
-            </Fragment>
+            </>
           )}
-          <a href={html_url} classNme="btn btn-dark my-1">
+          <a target="_blank" href={html_url} className="btn btn-dark my-1">
             Visit Github Profile
           </a>
           <ul>
-            <li>
-              {login && (
-                <Fragment>
-                  <strong>Username: </strong> {login}
-                </Fragment>
-              )}
-            </li>
-            <li>
-              {company && (
-                <Fragment>
-                  <strong>Company: </strong> {company}
-                </Fragment>
-              )}
-            </li>
-            <li>
-              {blog && (
-                <Fragment>
-                  <strong>Website: </strong> {blog}
-                </Fragment>
-              )}
-            </li>
+            {login && (
+              <li>
+                <strong>Username: </strong> {login}
+              </li>
+            )}
+            {company && (
+              <li>
+                <strong>Company: </strong> {company}
+              </li>
+            )}
+
+            {blog && (
+              <li>
+                <strong>Website: </strong> {blog}
+              </li>
+            )}
           </ul>
         </div>
       </div>
@@ -97,7 +88,7 @@ const User = ({ match }) => {
         <div className="badge badge-dark">Publis Gists: {public_gists}</div>
       </div>
       <Repos repos={repos} />
-    </Fragment>
+    </>
   );
 };
 

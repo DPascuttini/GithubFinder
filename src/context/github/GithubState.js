@@ -9,7 +9,7 @@ import {
   GET_REPOS,
 } from '../types';
 import GithubContext from './githubContext';
-import githubReducer from './githubReducer';
+import GithubReducer from './githubReducer';
 
 let GithubClientId;
 let GithubClientSecret;
@@ -30,7 +30,7 @@ const GithubState = (props) => {
     loading: false,
   };
 
-  const [state, dispatch] = useReducer(githubReducer, initialState);
+  const [state, dispatch] = useReducer(GithubReducer, initialState);
 
   // Search Users
   const searchUsers = async (text) => {

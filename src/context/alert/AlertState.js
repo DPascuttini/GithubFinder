@@ -1,8 +1,8 @@
 import React, { useReducer } from 'react';
 
 import { SET_ALERT, REMOVE_ALERT } from '../types';
+import AlertContext from './alertContext';
 import AlertReducer from './alertReducer';
-import AlertContext from './githubContext';
 
 const AlertState = (props) => {
   const initialState = null;
@@ -12,10 +12,10 @@ const AlertState = (props) => {
   // Set Alert
   const setAlert = (msg, type) => {
     dispatch({
-        type: SET_ALERT,
-        payload: {msg, type}
+      type: SET_ALERT,
+      payload: { msg, type },
     });
-    setTimeout(()=> dispatch({type: REMOVE_ALERT}), 2500);
+    setTimeout(() => dispatch({ type: REMOVE_ALERT }), 2500);
   };
 
   return (
@@ -30,4 +30,4 @@ const AlertState = (props) => {
   );
 };
 
-export default GithubState;
+export default AlertState;
